@@ -1,5 +1,6 @@
 # aws-athena-saml-auth-driver
-This is a project which wraps up the AWS Athena driver and provide extra layer of SAML auth to get the connection rather than using AccessID and Secret Key. The original requirement for this project is to provide a Athena Driver for Tableau Server to connect to Athena with SAML auth-ed AD credentials.
+This is a project which wraps up the AWS Athena driver and provide extra layer of SAML auth to get the connection rather than using AccessID and Secret Key.
+The original requirement for this project is to provide a Athena Driver for Tableau Server to connect to Athena with SAML auth-ed AD credentials.
 
 ## Concept and dependencies
 The core idea is to utilise the Athena driver options to point to a custom credential provider which could resolve SAML Auth issues and get a STS token to authenticate user to AWS using SAML auth.
@@ -81,3 +82,12 @@ A sample credentials file will look like below:
 
 Where the `baseurl` is the internal ADFS link. `mytest` is the profile prefix which allows user to put multiple SAML profiles into the credentials file and choose the right one in the `aws_credentials_provider_arguments` options.
 
+## Where to specify the options - Tableau Specific
+This is really flexible considering different ways of specifying the `aws_credentials_provider_class` and `aws_credentials_provider_arguments` options. But for Tableau, there's a specific `athena.properties` file which you could use to put in those attributes. An example of the file would look like:
+
+    log_path=/tmp/athena.log
+    log_level=DEBUG
+    aws_credentials_provider_class=com.amazonaws.athena.jdbc.SAMLAuthADIntegratedAWSSessionCredentialsProvider
+    aws_credentials_provider_arguments="mytest,/tmp/mycred.properties"
+
+Please refer to (http://kb.tableau.com/articles/howto/Customizing-JDBC-Connections) about customizing Tableau Athena JDBC Connector driver.
