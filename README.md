@@ -52,6 +52,7 @@ Here I used a maven trick to put custom driver into `.m2/repositories` correspon
     </dependency>
 
 I could then download the jar and put them into `.m2/repositories/com/amazonaws/athena/jdbc/AthenaJDBC41/1.1.0`. If you are using the 2.X athena driver, please fix the path and maven identifier accordingly.
+If you are using Artifactory or some other local maven repositories, you could create the server path for this driver instead.
 
 Once built, the target jar could serve as a individual driver for uses such as Tableau required JDBC Driver with some extra properties. This will be discussed in the next section.
 
